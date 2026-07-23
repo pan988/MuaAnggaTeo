@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const paket = data.get('paket');
       const catatan = data.get('catatan') || '-';
       const text = `Halo kak, saya mau booking makeup.%0ANama: ${encodeURIComponent(nama)}%0ANo WA: ${encodeURIComponent(wa)}%0ATanggal Acara: ${encodeURIComponent(tanggal)}%0APaket: ${encodeURIComponent(paket)}%0ACatatan: ${encodeURIComponent(catatan)}`;
-      window.open(`https://wa.me/6287762826883?text=${text}`, '_blank');
+      window.open(`https://wa.me/6282266145607?text=${text}`, '_blank');
     });
   }
 });
