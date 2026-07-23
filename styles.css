@@ -109,34 +109,73 @@ header{
 .fa-tiktok { color: #000000; }
 .fa-facebook { color: #1877F2; }
 
-/* HERO */
-.hero{position:relative;overflow:hidden;padding:70px 0 40px;}
-.hero .wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:center;}
-.hero h1{font-size:2.7rem;line-height:1.18;margin:6px 0 18px;}
-.hero p{color:var(--ink-soft);max-width:420px;margin-bottom:28px;}
-.hero-btns{display:flex;gap:14px;margin-bottom:44px;flex-wrap:wrap;}
-.hero-stats{display:flex;gap:34px;flex-wrap:wrap;}
-.hero-stat{display:flex;align-items:center;gap:10px;}
-.hero-stat .icon{
-  width:38px;height:38px;border-radius:50%;background:var(--cream-deep);
-  display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--rose-deep);flex-shrink:0;
-}
-.hero-stat strong{display:block;font-size:.85rem;font-weight:600;}
-.hero-stat span{font-size:.78rem;color:var(--ink-soft);}
-.hero-img{
+
+
+/* HERO FULL-SCREEN VIDEO */
+.hero-full{
   position:relative;
-  border-radius:16px;
+  width:100%;
+  height:100vh;
+  height:100svh; /* pakai satuan viewport yg akurat di HP (address bar naik-turun) */
   overflow:hidden;
-  aspect-ratio:9/16;
-  max-width:380px;
-  margin:0 auto;
-  box-shadow:0 24px 48px -20px rgba(46,38,34,.25);
 }
-.hero-img video,
-.hero-img img{
+.hero-full video{
+  position:absolute;
+  inset:0;
   width:100%;
   height:100%;
   object-fit:cover;
+}
+.hero-full::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom, rgba(46,38,34,0) 35%, rgba(46,38,34,.65) 100%);
+  pointer-events:none;
+}
+.hero-full-content{
+  position:relative;
+  z-index:2;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  align-items:center;
+  text-align:center;
+  padding:0 24px 64px;
+}
+.hero-full-title{
+  font-family:'Playfair Display',serif;
+  font-size:2.1rem;
+  color:#fff;
+  margin-bottom:26px;
+  text-shadow:0 2px 16px rgba(0,0,0,.4);
+}
+.hero-full-btns{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  width:100%;
+  max-width:340px;
+}
+.hero-full-btns .btn{
+  width:100%;
+  justify-content:center;
+  padding:16px 28px;
+}
+.btn-on-dark{
+  border-color:#fff;
+  color:#fff;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(4px);
+}
+.btn-on-dark:hover{
+  background:#fff;
+  color:var(--rose-deep);
+}
+
+@media(max-width:520px){
+  .hero-full-title{font-size:1.7rem;}
 }
 /* ABOUT */
 .about{padding:90px 0;}
@@ -232,7 +271,8 @@ header{
   background:var(--white);border-radius:14px;padding:28px 28px 34px;text-align:center;
   border:1px solid var(--line);position:relative;
 }
-.price-card.popular{border:2px solid var(--rose);transform:translateY(-14px);box-shadow:0 20px 40px -20px rgba(196,110,86,.35);}
+.price-card.popular{border:2px solid var(--rose);box-shadow:0 20px 40px -20px rgba(196,110,86,.35);}
+.price-card.popular[data-reveal].is-visible{transform:translateY(-14px);}
 .badge{
   position:absolute;top:-13px;left:50%;transform:translateX(-50%);
   background:var(--rose);color:#fff;font-size:.7rem;padding:5px 14px;border-radius:12px;letter-spacing:1px;z-index:2;
@@ -382,4 +422,38 @@ footer{background:var(--cream-deep);padding:70px 0 24px;}
   .footer-grid{gap:28px;}
   .footer-grid > div{flex:1 1 100%;}
   .contact-social-item{font-size:.82rem;padding:11px 16px;}
+}
+
+/* ================= SCROLL REVEAL ================= */
+[data-reveal]{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .8s cubic-bezier(.16,.84,.44,1), transform .8s cubic-bezier(.16,.84,.44,1);
+  will-change:opacity, transform;
+}
+[data-reveal].is-visible{
+  opacity:1;
+  transform:translateY(0);
+}
+[data-reveal="left"]{transform:translateX(-36px);}
+[data-reveal="left"].is-visible{transform:translateX(0);}
+[data-reveal="right"]{transform:translateX(36px);}
+[data-reveal="right"].is-visible{transform:translateX(0);}
+[data-reveal="zoom"]{transform:scale(.94);}
+[data-reveal="zoom"].is-visible{transform:scale(1);}
+
+@media (prefers-reduced-motion: reduce){
+  [data-reveal]{transition:none !important; opacity:1 !important; transform:none !important;}
+}
+
+/* Hero: judul & tombol fade-in pelan begitu halaman dibuka (bukan pas discroll, karena hero langsung kelihatan) */
+.hero-full-title,.hero-full-btns{
+  opacity:0;
+  animation:heroFadeUp .9s ease forwards;
+}
+.hero-full-title{animation-delay:.15s;}
+.hero-full-btns{animation-delay:.4s;}
+@keyframes heroFadeUp{
+  from{opacity:0; transform:translateY(22px);}
+  to{opacity:1; transform:translateY(0);}
 }

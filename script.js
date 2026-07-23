@@ -79,4 +79,56 @@ document.addEventListener('DOMContentLoaded', () => {
       window.open(`https://wa.me/6282266145607?text=${text}`, '_blank');
     });
   }
+
+  /* ---------- SCROLL REVEAL ----------
+     Auto-tags common elements with data-reveal so nothing in the HTML
+     needs to change. Elements fade + slide in the first time they enter
+     the viewport, staggered one after another within their own section. */
+  const revealGroups = [
+    { selector: '.about-img', type: 'left' },
+    { selector: '.about-text', type: 'right' },
+    { selector: '.section-head', type: 'up' },
+    { selector: '.stat-grid .stat-card', type: 'up' },
+    { selector: '.contact-info-grid .stat-card', type: 'up' },
+    { selector: '.gallery-item', type: 'zoom' },
+    { selector: '.price-card', type: 'up' },
+    { selector: '.test-card', type: 'up' },
+    { selector: '.step', type: 'up' },
+    { selector: '.contact-social-item', type: 'up' },
+    { selector: '.page-header .eyebrow', type: 'up' },
+    { selector: '.page-header h1', type: 'up' },
+    { selector: '.page-header p', type: 'up' },
+    { selector: '.booking-form', type: 'up' }
+  ];
+
+  revealGroups.forEach(({ selector, type }) => {
+    const byParent = new Map();
+    document.querySelectorAll(selector).forEach(el => {
+      if (el.hasAttribute('data-reveal')) return;
+      const parent = el.parentElement;
+      const idx = byParent.get(parent) || 0;
+      byParent.set(parent, idx + 1);
+      el.setAttribute('data-reveal', type);
+      el.style.transitionDelay = Math.min(idx * 90, 450) + 'ms';
+    });
+  });
+
+  const supportsIO = 'IntersectionObserver' in window;
+  const revealTargets = document.querySelectorAll('[data-reveal]');
+
+  if (supportsIO) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+    revealTargets.forEach(el => io.observe(el));
+  } else {
+    // fallback: just show everything if the browser can't do IntersectionObserver
+    revealTargets.forEach(el => el.classList.add('is-visible'));
+  }
 });
