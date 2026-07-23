@@ -78,24 +78,20 @@ header{
 .mobile-panel a.active{color:var(--rose-deep);font-weight:500;}
 .mobile-panel .btn{margin:16px 24px;justify-content:center;}
 
-/* social-icons */
+/* social-icons (legacy, kept for icon color reference if you use Font Awesome elsewhere) */
 .social {
     display: flex;
     gap: 20px;
 }
-
 .social a {
     color: white;
     font-size: 30px;
     transition: 0.3s;
 }
-
 .social a:hover {
     color: #00bfff;
     transform: scale(1.2);
 }
-
-/* Instagram (Gradient) */
 .fa-instagram {
     background: radial-gradient(
         circle at 30% 107%,
@@ -109,20 +105,9 @@ header{
     background-clip: text;
     color: transparent;
 }
-/* WhatsApp */
-.fa-whatsapp {
-    color: #25D366;
-}
-
-/* TikTok */
-.fa-tiktok {
-    color: #000000; /* Hitam */
-}
-
-/* Facebook */
-.fa-facebook {
-    color: #1877F2;
-}
+.fa-whatsapp { color: #25D366; }
+.fa-tiktok { color: #000000; }
+.fa-facebook { color: #1877F2; }
 
 /* HERO */
 .hero{position:relative;overflow:hidden;padding:70px 0 40px;}
@@ -138,9 +123,21 @@ header{
 }
 .hero-stat strong{display:block;font-size:.85rem;font-weight:600;}
 .hero-stat span{font-size:.78rem;color:var(--ink-soft);}
-.hero-img{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/3;}
-.hero-img img{width:100%;height:100%;object-fit:cover;}
-
+.hero-img{
+  position:relative;
+  border-radius:16px;
+  overflow:hidden;
+  aspect-ratio:9/16;
+  max-width:380px;
+  margin:0 auto;
+  box-shadow:0 24px 48px -20px rgba(46,38,34,.25);
+}
+.hero-img video,
+.hero-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
 /* ABOUT */
 .about{padding:90px 0;}
 .about .wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:center;}
@@ -158,6 +155,60 @@ header{
 .stat-card .num{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--rose-deep);}
 .stat-card .lbl{font-size:.78rem;color:var(--ink-soft);margin-top:2px;}
 .stat-card .glyph{font-size:1.1rem;color:var(--gold);margin-bottom:6px;}
+
+/* CONTACT PAGE: info cards grid (phone / email / address) */
+.contact-info-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+.contact-info-grid .stat-card .lbl{
+  font-size:.9rem;
+  margin-top:6px;
+  line-height:1.5;
+}
+@media(max-width:700px){
+  .contact-info-grid{grid-template-columns:1fr;}
+}
+
+/* CONTACT PAGE: "Lihat Juga Media Sosial Kami" pill row */
+.contact-social-section{margin-top:56px;text-align:center;}
+.contact-social-title{
+  font-size:1.25rem;
+  margin-bottom:22px;
+}
+.contact-socials{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:14px;
+  max-width:680px;
+  margin:0 auto;
+}
+.contact-social-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:30px;
+  padding:12px 20px;
+  font-size:.85rem;
+  color:var(--ink);
+  transition:.25s;
+}
+.contact-social-item:hover{
+  border-color:var(--rose);
+  color:var(--rose-deep);
+  transform:translateY(-2px);
+}
+.contact-social-icon{
+  width:30px;height:30px;border-radius:50%;background:var(--cream-deep);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;
+}
+@media(max-width:520px){
+  .contact-social-item{width:100%;}
+}
 
 /* PORTFOLIO */
 .portfolio{padding:90px 0;background:var(--white);}
@@ -235,7 +286,20 @@ header{
 
 /* FOOTER */
 footer{background:var(--cream-deep);padding:70px 0 24px;}
-.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr 1fr;gap:30px;margin-bottom:50px;}
+
+/* footer columns use flex + space-between so remaining columns stretch
+   to fill the row and there's no dead space on the right, no matter
+   how many columns you keep (4 or 5) — applies at every screen size */
+.footer-grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  gap:32px;
+  margin-bottom:50px;
+}
+.footer-grid > div{
+  flex:1 1 180px;
+}
 .footer-grid h5{font-size:.9rem;margin-bottom:16px;}
 .footer-grid p{font-size:.85rem;color:var(--ink-soft);}
 .footer-grid ul{list-style:none;}
@@ -244,6 +308,8 @@ footer{background:var(--cream-deep);padding:70px 0 24px;}
 .foot-logo{font-family:'Playfair Display',serif;color:var(--rose-deep);font-size:1.3rem;margin-bottom:10px;}
 .insta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
 .insta-grid img{border-radius:6px;aspect-ratio:1/1;object-fit:cover;}
+
+/* social icons WITH label text next to each icon (footer) */
 .socials{
   display:flex;
   flex-direction:column;
@@ -267,6 +333,7 @@ footer{background:var(--cream-deep);padding:70px 0 24px;}
   width:32px;height:32px;border-radius:50%;background:var(--white);
   display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;
 }
+
 .foot-bottom{
   border-top:1px solid #e7d3c6;padding-top:20px;text-align:center;
   font-size:.78rem;color:var(--ink-soft);
@@ -278,16 +345,7 @@ footer{background:var(--cream-deep);padding:70px 0 24px;}
   .gallery{grid-template-columns:repeat(3,1fr);}
   .pricing-grid,.test-grid{grid-template-columns:1fr;}
   .price-card.popular{transform:none;}
-  .footer-grid{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:space-between;
-  gap:40px;
-  margin-bottom:50px;
-}
-.footer-grid > div{
-  flex:1 1 180px;
-}
+  .footer-grid > div{flex:1 1 40%;}
   .nav-links{display:none;}
   .nav-cta{display:none;}
   .burger{display:flex;}
@@ -321,14 +379,7 @@ footer{background:var(--cream-deep);padding:70px 0 24px;}
   .step{flex:1 1 100%;display:flex;align-items:center;gap:14px;text-align:left;}
   .step .circle{margin:0;flex-shrink:0;}
   .step p{max-width:none;}
-  .footer-grid{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:space-between;
-  gap:40px;
-  margin-bottom:50px;
-}
-.footer-grid > div{
-  flex:1 1 180px;
-}
+  .footer-grid{gap:28px;}
+  .footer-grid > div{flex:1 1 100%;}
+  .contact-social-item{font-size:.82rem;padding:11px 16px;}
 }
